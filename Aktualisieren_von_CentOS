@@ -1,0 +1,45 @@
+# So führen Sie ein Upgrade von CentOS 7 auf CentOS 8 durch
+# Hier der Link der Seite aus der diese Informationen stammen
+
+yum update
+    # Wenn es Updates gibt, werden wir Folgendes sehen: Is this ok [y] [n]. Geben sie den Buchsteben an
+
+# Der nächste Schritt besteht darin, in das Verzeichnis /etc zu wechseln und dort den Pfad yum.repos.d zu suchen.
+cd /etc
+cd yum.repos.d/
+ls
+
+# Mit einem Editor greifen wir auf die Datei CentOS-Base.repo zu:
+nano CentOS-Base.repo 
+# Dort fügen wir folgendes zu: 
+#    ######################################################
+#    # [upgrade]                                          #
+#    # name=upgrade                                       #
+#    # baseurl=http://dev.centos.org/centos/8/upg/x86_64/ #
+#    # enabled=1                                          #
+#    # gpgcheck=0                                         #
+#    ######################################################
+# Datei speichern und Editor schließen
+
+# Nun führen wir folgenden Befehl aus:
+yum install preupgrade-assistant-contents
+    ###################################################################################################
+    # Dies ist erforderlich, um den Update-Assistenten zu installieren.                               #
+    # Nach der Installation führen Sie yum ugrade aus,                                                #
+    # um die auf dem System verfügbaren Updates einschließlich CentOS 8 zu suchen und zu installieren #
+    ###################################################################################################
+yum ugrade
+    # Die Downloadliste bestätigen
+    # Dann werden wir gefragt, ob wir den GPG-Schlüssel importieren möchten: Yes [y]
+
+# Sobald dies alles abgeschlossen ist, muss das System mit dem Befehl reboot neu gestartet werden.
+reboot
+
+# Überprüfen Sie anschließend, ob es korrekt aktualisiert wurde, indem Sie Folgendes ausführen:
+cat /etc/redhat-release
+
+    ###############################################################################################################
+    # Mit Manuel Krey's Anleitung haben Sie gelernt,                                                              #
+    # CentOS 8 zu installieren oder auf die neue Version zu aktualisieren,                                        #
+    # die zweifellos für alle Administratoren und Benutzer dieses großartigen Systems von großem Nutzen sein wird.#
+    ###############################################################################################################
